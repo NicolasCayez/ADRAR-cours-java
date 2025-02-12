@@ -1,4 +1,4 @@
-package TpTabCollectionEtSQL;
+package TpTabCollectionEtSQL.Model;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -7,10 +7,11 @@ public class Livre {
     /* ------------------------------------------ **
      * ATTRIBUTES
      * ------------------------------------------ */
-    String titre;
-    String description;
-    String datePublication;
-    ArrayList<String> genre = new ArrayList<>();
+    private int id;
+    private String titre;
+    private String description;
+    private String datePublication;
+    private ArrayList<String> genre = new ArrayList<>();
 
     /* ------------------------------------------ **
      * CONSTRUCTORS
@@ -25,10 +26,25 @@ public class Livre {
         this.datePublication = datePublication;
         this.genre = genre;
     }
+    //complet avec Id
+    public Livre(int id, String titre, String description, String datePublication, ArrayList<String> genre) {
+        this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.datePublication = datePublication;
+        this.genre = genre;
+    }
 
     /* ------------------------------------------ **
      * GET / SET
      * ------------------------------------------ */
+    // Id
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     // Titre
     public String getTitre() {
         return titre;
@@ -72,4 +88,6 @@ public class Livre {
         }
         this.genre = genreList;
     }
+
+
 }

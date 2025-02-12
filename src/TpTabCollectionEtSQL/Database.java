@@ -1,21 +1,18 @@
 package TpTabCollectionEtSQL;
 
+import TpTabCollectionEtSQL.Model.Livre;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public class Requetes {
-    //Attribut paramètre BDD
-    static final String DB_URL =
-            "jdbc:mysql://localhost/tp_java?serverTimezone=UTC";
-    static final String USERNAME = "root";
-    static final String PASSWORD = "";
+public class Database {
     //Connexion à la BDD
-    private static Connection connexion;
+    public static Connection connexion;
     static {
         try {
-            connexion = DriverManager.getConnection(DB_URL, USERNAME,
-                    PASSWORD);
+            connexion = DriverManager.getConnection(Env.DB_URL, Env.DB_LOGIN,
+                    Env.DB_PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -28,7 +25,7 @@ public class Requetes {
             //Connection à la BDD...
             Statement stmt = connexion.createStatement();
             //requête SQL
-            String sql = "INSERT INTO livre (titre, description, date_publication, genre)" + "VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO livre (titre, description_livre, date_publication, genre)" + "VALUES (?, ?, ?, ?)";
             //Préparation de la requête
             PreparedStatement preparedStatement =
                     connexion.prepareStatement(sql);
@@ -69,7 +66,7 @@ public class Requetes {
             // Connection à la BDD ...
             Statement stmt = connexion.createStatement();
             //requête SQL
-            String sql = "SELECT titre, description, date_publication, genre FROM livre";
+            String sql = "SELECT id, titre, description_livre, date_publication, genre FROM livre";
             //Préparation de la requête
             PreparedStatement preparedStatement =
                     connexion.prepareStatement(sql);
@@ -80,8 +77,9 @@ public class Requetes {
                 //Si la réponse est différente de null
                 if (rs.getString(1)!= null){
                     livreGet = new Livre();
+                    livreGet.setId(rs.getInt("id"));
                     livreGet.setTitre(rs.getString("titre"));
-                    livreGet.setDescription(rs.getString("description"));
+                    livreGet.setDescription(rs.getString("description_livre"));
                     livreGet.setDatePublication(rs.getString("date_publication"));
 //                    livreGet.setGenre(rs.getString("genre"));
 //                    String[] genresList = rs.getString("genre").split(Pattern.quote("."));
@@ -143,12 +141,12 @@ public class Requetes {
             //Connection à la BDD...
             Statement stmt = connexion.createStatement();
             //requête SQL
-            String sql = "DELETE FROM livre WHERE titre = (?)";
+            String sql = "DELETE FROM livre WHERE id = (?)";
             //Préparation de la requête
             PreparedStatement preparedStatement =
                     connexion.prepareStatement(sql);
             //Bind des paramètres
-            preparedStatement.setString(1, livre.getTitre());
+            preparedStatement.setInt(1, livre.getId());
             //Exécution de la requête
             int deletedRows = preparedStatement.executeUpdate();
             //test si l'enregistrement est ok

@@ -1,10 +1,12 @@
 package TpTabCollectionEtSQL;
 
+import TpTabCollectionEtSQL.Model.Livre;
+import TpTabCollectionEtSQL.Repositories.LivreRepository;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Scanner;
 
-public class TabCollectionEtSQL {
+public class Main {
     /* ------------------------------------------ **
      * ATTRIBUTS
      * ------------------------------------------ */
@@ -22,7 +24,7 @@ public class TabCollectionEtSQL {
         /* ------------------------------------------ **
          * PROGRAMME
          * ------------------------------------------ */
-        String choixMenu = "";
+        int choixMenu = -1;
         boolean fini = false;
         while (fini == false) {
             System.out.println("----- ACTIONS POSSIBLES -----");
@@ -31,18 +33,18 @@ public class TabCollectionEtSQL {
             System.out.println("- 3 - Suppression d'un livre");
             System.out.println("- 0 - Quitter");
             try {
-                choixMenu = scanner.next();
+                choixMenu = scanner.nextInt();
                 switch (choixMenu) {
-                    case "1":
+                    case 1:
                         findAll(scanner);
                         break;
-                    case "2":
+                    case 2:
                         add(scanner);
                         break;
-                    case "3":
+                    case 3:
                         remove(scanner);
                         break;
-                    case "0":
+                    case 0:
                         System.out.println("Arrêt du programme");
                         fini = true;
                         break;
@@ -95,7 +97,11 @@ public class TabCollectionEtSQL {
             }
             nouveauLivre.setGenre(genreList);
 //            collection.add(nouveauLivre);
-            Requetes.addLivre(nouveauLivre);
+            if (!LivreRepository.isExistingLivreByTitre(nouveauLivre)) { // pas de doublon sur le titre
+                LivreRepository.insertLivre(nouveauLivre);
+            }
+            // Ancienne version sans repo
+//            Database.addLivre(nouveauLivre);
         }catch (Exception e) {
             System.out.println("Erreur : " + e.getMessage());
         }
@@ -109,7 +115,7 @@ public class TabCollectionEtSQL {
             int index = scanner.nextInt() - 1; //car la liste commence à 1 et l'indice à 0
             if (collection.get(index) != null) { // le livre existe dans la collection
                 System.out.println("Suppression du livre N°" + (index+1) + " - Titre: " + collection.get(index).getTitre());
-                Requetes.removeLivre(collection.get(index));
+                Database.removeLivre(collection.get(index));
 //                collection.remove(index);
                 //*********************************
             } else {
@@ -123,7 +129,7 @@ public class TabCollectionEtSQL {
     static void findAll(Scanner scanner){
         System.out.println("----- LISTE DES LIVRES ------");
         System.out.println("Voici la liste des livres");
-        collection = Requetes.getCollection();
+        collection = Database.getCollection();
         if (collection.size() == 0) {
             System.out.println("Pas de livres dans la collection");
         }
