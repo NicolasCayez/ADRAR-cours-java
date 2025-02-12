@@ -38,11 +38,12 @@ public class Requetes {
             preparedStatement.setString(2, livre.getDescription());
             preparedStatement.setString(3, livre.getDatePublication());
 //            preparedStatement.setString(4, livre.getGenre().toString());
-            String genreString = "";
-            for (String unGenre: livre.getGenre()){
-                genreString += unGenre + ",";
-            }
-            preparedStatement.setString(4, genreString);
+//            String genreString = "";
+//            for (String unGenre: livre.getGenre()){
+//                genreString += unGenre + ",";
+//            }
+//            preparedStatement.setString(4, genreString);
+            preparedStatement.setString(4, livre.getGenreAsString());
             //Exécution de la requête
             int addedRows = preparedStatement.executeUpdate();
             //test si l'enregistrement est ok
@@ -83,12 +84,12 @@ public class Requetes {
                     livreGet.setDescription(rs.getString("description"));
                     livreGet.setDatePublication(rs.getString("date_publication"));
 //                    livreGet.setGenre(rs.getString("genre"));
-                    String[] genresList = rs.getString("genre").split(Pattern.quote("."));
-                    ArrayList<String> genreArrayList = new ArrayList<>();
-                    for(String unGenre : genresList){
-                        genreArrayList.add(unGenre);
-                    }
-                    livreGet.setGenre(genreArrayList);
+//                    String[] genresList = rs.getString("genre").split(Pattern.quote("."));
+//                    ArrayList<String> genreArrayList = new ArrayList<>();
+//                    for(String unGenre : genresList){
+//                        genreArrayList.add(unGenre);
+//                    }
+                    livreGet.setGenreFromString(rs.getString("genre"));
                     collection.add(livreGet);
                 }
             }

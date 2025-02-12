@@ -131,10 +131,11 @@ public class TabCollectionEtSQL {
             Livre leLivre = new Livre();
             for(int i = 0; i< collection.size(); i++) {
                 leLivre = collection.get(i);
-                String genresDuLivre = "";
-                for (String unGenre : leLivre.getGenre()) {
-                    genresDuLivre = unGenre + ",";
-                }
+//                String genresDuLivre = "";
+//                for (String unGenre : leLivre.getGenre()) {
+//                    genresDuLivre = unGenre + ",";
+//                }
+                String genresDuLivre = leLivre.getGenreAsString();
                 System.out.println("N°" + (i+1) +
                         "- Titre: " + leLivre.getTitre() +
                         "- Description: " + leLivre.getTitre() +

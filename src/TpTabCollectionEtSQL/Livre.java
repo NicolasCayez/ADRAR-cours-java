@@ -1,6 +1,7 @@
 package TpTabCollectionEtSQL;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class Livre {
     /* ------------------------------------------ **
@@ -55,5 +56,20 @@ public class Livre {
     }
     public void setGenre(ArrayList<String> genre) {
         this.genre = genre;
+    }
+    public String getGenreAsString() {
+        String genreString = "";
+        for (String unGenre: this.getGenre()){
+            genreString = genreString + unGenre + ",";
+        }
+        return genreString;
+    }
+    public void setGenreFromString(String genre) {
+        String[] genresList = genre.split(Pattern.quote(","));
+        ArrayList<String> genreList = new ArrayList<>();
+        for(String unGenre : genresList){
+            genreList.add(unGenre);
+        }
+        this.genre = genreList;
     }
 }
