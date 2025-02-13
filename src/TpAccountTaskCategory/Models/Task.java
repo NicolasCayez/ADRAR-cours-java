@@ -1,10 +1,8 @@
 package TpAccountTaskCategory.Models;
 
-import TpAccountTaskCategory.Repositories.AccountRepository;
 import TpAccountTaskCategory.Repositories.CategoryRepository;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Task {
     /* ------------------------------------------ **
@@ -15,7 +13,9 @@ public class Task {
     private String description;
     private java.sql.Date createdAt;
     private boolean status;
-    private int account_id;
+//    private int account_id; // on met l'objet et pas juste l'ID
+    private Account account;
+    private ArrayList<Category> categories;
 
     /* ------------------------------------------ **
      * CONSTRUCTORS
@@ -24,21 +24,21 @@ public class Task {
     public Task() {
     }
     // Full
-    public Task(int id, String title, String description, java.sql.Date createdAt, boolean status, int account_id) {
+    public Task(int id, String title, String description, java.sql.Date createdAt, boolean status, Account account) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.createdAt = createdAt;
         this.status = status;
-        this.account_id = account_id;
+        this.account = account;
     }
     // Full without Id
-    public Task(String title, String description, java.sql.Date createdAt, boolean status, int account_id) {
+    public Task(String title, String description, java.sql.Date createdAt, boolean status, Account account) {
         this.title = title;
         this.description = description;
         this.createdAt = createdAt;
         this.status = status;
-        this.account_id = account_id;
+        this.account = account;
     }
 
     /* ------------------------------------------ **
@@ -80,19 +80,40 @@ public class Task {
         this.status = status;
     }
     // account_id
-    public int getAccount_id() {
-        return account_id;
+//    public int getAccount_id() {
+//        return account_id;
+//    }
+//    public void setAccount_id(int account_id) {
+//        this.account_id = account_id;
+//    }
+    // account
+    public Account getAccount() {
+        return account;
     }
-    public void setAccount_id(int account_id) {
-        this.account_id = account_id;
+    public void setAccount(Account account) {
+        this.account = account;
     }
+    // Categories
+    public ArrayList<Category> getCategories() {
+        return categories;
+    }
+    public void setCategories(ArrayList<Category> categories) {
+        this.categories = categories;
+    }
+    public void addCategories(Category category) {
+        this.categories.add(category);
+    }
+    public void removeCategories(Category category) {
+        this.categories.remove(category);
+    }
+
 
     /* ------------------------------------------ **
      * toString
      * ------------------------------------------ */
     @Override
     public String toString() {
-        Account account = AccountRepository.findById(account_id);
+//        Account account = AccountRepository.findById(account_id);
         ArrayList<Category> categoriesList = CategoryRepository.findAllByTaskId(id);
         String categories = "";
         for (Category oneCategory : categoriesList) {

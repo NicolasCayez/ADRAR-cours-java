@@ -1,10 +1,7 @@
 package TpAccountTaskCategory.Repositories;
 
-import TpAccountTaskCategory.Models.Account;
 import TpAccountTaskCategory.Models.Category;
-import TpAccountTaskCategory.Models.Task;
 import TpTabCollectionEtSQL.Database;
-import TpTabCollectionEtSQL.Model.Livre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

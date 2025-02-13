@@ -6,8 +6,6 @@ import TpAccountTaskCategory.Models.Task;
 import TpAccountTaskCategory.Repositories.AccountRepository;
 import TpAccountTaskCategory.Repositories.CategoryRepository;
 import TpAccountTaskCategory.Repositories.TaskRepository;
-import TpTabCollectionEtSQL.Model.Livre;
-import TpTabCollectionEtSQL.Repositories.LivreRepository;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -220,7 +218,7 @@ public class Main {
                     for (Account account : accountsList) {
                         System.out.println(account.toString());
                     }
-                    newTask.setAccount_id(scanner.nextInt());
+                    newTask.setAccount(AccountRepository.findById(scanner.nextInt()));
                     //enregistrement
                     TaskRepository.add(newTask, categoriesID);
                     break;

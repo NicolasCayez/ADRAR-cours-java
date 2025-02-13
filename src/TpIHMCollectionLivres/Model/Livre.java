@@ -1,4 +1,4 @@
-package TpTabCollectionEtSQL.Model;
+package TpIHMCollectionLivres.Model;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -88,7 +88,6 @@ public class Livre {
         }
         this.genre = genreList;
     }
-    
     
     @Override
     public String toString() {

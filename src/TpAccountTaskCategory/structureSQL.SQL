@@ -1,3 +1,4 @@
+CREATE DATABASE IF NOT EXISTS tp_java;
 use tp_java;
 --
 -- creation des tables

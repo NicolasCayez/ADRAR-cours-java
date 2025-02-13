@@ -1,10 +1,7 @@
 package TpAccountTaskCategory.Repositories;
 
-import TpAccountTaskCategory.Models.Account;
-import TpAccountTaskCategory.Models.Category;
 import TpAccountTaskCategory.Models.Task;
 import TpTabCollectionEtSQL.Database;
-import com.mysql.cj.xdevapi.Result;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,7 +35,7 @@ public class TaskRepository {
             preparedStatement.setString(2, task.getDescription());
             preparedStatement.setDate(3, task.getCreatedAt());
             preparedStatement.setInt(4, task.getStatus() ? 1 : 0);// status true -> 1 / false -> 0
-            preparedStatement.setInt(5, task.getAccount_id());
+            preparedStatement.setInt(5, task.getAccount().getId());
             //Exécution de la requête
             preparedStatement.executeUpdate();
             ResultSet resultRows = preparedStatement.getGeneratedKeys();
@@ -103,7 +100,7 @@ public class TaskRepository {
                     taskFound.setDescription(resultRows.getString("description"));
                     taskFound.setCreatedAt(resultRows.getDate("createdAt"));
                     taskFound.setStatus(resultRows.getBoolean("status"));
-                    taskFound.setAccount_id(resultRows.getInt("account_id"));
+                    taskFound.setAccount(AccountRepository.findById(resultRows.getInt("account_id")));
                 }
             }
         }catch(Exception e){
@@ -139,7 +136,7 @@ public class TaskRepository {
                      oneTask.setDescription(resultRows.getString("description"));
                      oneTask.setCreatedAt(resultRows.getDate("createdAt"));
                      oneTask.setStatus(resultRows.getBoolean("status"));
-                     oneTask.setAccount_id(resultRows.getInt("account_id"));
+                     oneTask.setAccount(AccountRepository.findById(resultRows.getInt("account_id")));
                      taskList.add(oneTask);
                 }
 
